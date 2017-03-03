@@ -1,5 +1,5 @@
 <?php
-    class Brand
+    class Store
     {
         private $id;
         private $name;
@@ -34,7 +34,7 @@
         function save()
         {
             $GLOBALS['DB']->exec(
-            "INSERT INTO brands
+            "INSERT INTO stores
                 (name) VALUES
                 ('{$this->getName()}');"
             );
@@ -46,7 +46,7 @@
             $this->setName($name);
 
             $GLOBALS['DB']->exec(
-                "UPDATE brands SET
+                "UPDATE stores SET
                     name = '{$this->getName()}'
                 WHERE id = {$this->getId()};"
             );
@@ -58,28 +58,28 @@
             $query = "";
 
             if ($search_selector == 'id') {
-                $query = "SELECT * FROM brands WHERE id = $search_argument ORDER BY name;";
+                $query = "SELECT * FROM stores WHERE id = $search_argument ORDER BY name;";
             }
             if ($search_selector == 'all') {
-                $query = "SELECT * FROM brands ORDER BY name;";
+                $query = "SELECT * FROM stores ORDER BY name;";
             }
-            if ($search_selector == 'store_id') {
+            if ($search_selector == 'brand_id') {
                 $query =
-                    "SELECT brands.*
+                    "SELECT stores.*
                     FROM brands_stores
-                    JOIN brands ON brands_stores.brand_id = brands.id
-                    WHERE brands_stores.store_id = $search_argument
+                    JOIN stores ON brands_stores.brand_id = stores.id
+                    WHERE brands_stores.brand_id = $search_argument
                     ORDER BY name;";
             }
 
             if ($query) {
                 $results = $GLOBALS['DB']->query($query);
                 foreach ($results as $result) {
-                        $new_book = new Brand(
+                        $new_store = new Store(
                         $result['name'],
                         $result['id']
                     );
-                    array_push($output, $new_book);
+                    array_push($output, $new_store);
                 }
             }
             return $output;
@@ -95,10 +95,10 @@
             $delete_command = '';
 
             if ($search_selector == 'id') {
-                $delete_command = "DELETE FROM brands WHERE id = $search_argument;";
+                $delete_command = "DELETE FROM stores WHERE id = $search_argument;";
             }
             if ($search_selector == 'all') {
-                $delete_command = "DELETE FROM brands;";
+                $delete_command = "DELETE FROM stores;";
             }
 
             if ($delete_command) {
