@@ -57,7 +57,7 @@
         {
             $this->setBrandId($brand_id);
             $this->setStoreId($store_id);
-            
+
             $GLOBALS['DB']->exec(
                 "UPDATE brands_stores SET
                     brand_id = {$this->getBrandId()},
@@ -133,7 +133,7 @@
         static function find($id)
         {
             $result = self::getSome('id', $id);
-            return result[0];
+            return $result[0];
         }
 
         function delete()

@@ -144,6 +144,24 @@
 
         function test_BrandStore_find()
         {
+            // Arrange
+            $brand_store1 = new BrandStore(2, 1);
+            $brand_store2 = new BrandStore(3, 17);
+            $brand_store3 = new BrandStore(2, 7);
+            $brand_store4 = new BrandStore(13, 17);
+            $brand_store1->save();
+            $brand_store2->save();
+            $brand_store3->save();
+            $brand_store4->save();
+
+            // Act
+            $found_brand_store = BrandStore::find($brand_store3->getId());
+
+            // Assert
+            $this->assertEquals(
+                $brand_store3,
+                $found_brand_store
+            );
         }
 
         function test_BrandStore_getSome_brand_id()
