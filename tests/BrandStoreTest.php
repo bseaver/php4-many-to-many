@@ -100,6 +100,24 @@
 
         function test_BrandStore_deleteSome_brand_id()
         {
+            // Arrange
+            $brand_store1 = new BrandStore(2, 1);
+            $brand_store2 = new BrandStore(3, 17);
+            $brand_store3 = new BrandStore(2, 7);
+            $brand_store4 = new BrandStore(13, 17);
+            $brand_store1->save();
+            $brand_store2->save();
+            $brand_store3->save();
+            $brand_store4->save();
+
+            // Act
+            BrandStore::deleteSome('brand_id', 2);
+
+            // Assert
+            $this->assertEquals(
+                [$brand_store2, $brand_store4],
+                BrandStore::getAll()
+            );
         }
 
         function test_BrandStore_deleteSome_store_id()
