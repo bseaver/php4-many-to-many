@@ -78,10 +78,10 @@
                 $query = "SELECT * FROM brands_stores;";
             }
             if ($search_selector == 'brand_id') {
-                $delete_command = "SELECT * FROM brands_stores WHERE brand_id = $search_argument;";
+                $query = "SELECT * FROM brands_stores WHERE brand_id = $search_argument;";
             }
             if ($search_selector == 'store_id') {
-                $delete_command = "SELECT * FROM brands_stores WHERE store_id = $search_argument;";
+                $query = "SELECT * FROM brands_stores WHERE store_id = $search_argument;";
             }
 
             if ($query) {
