@@ -5,7 +5,7 @@
         private $name;
 
 
-        function __construct($name = '')
+        function __construct($name = '', $id = null)
         {
             $this->setName($name);
             $this->setId($id);
@@ -58,17 +58,18 @@
             $query = "";
 
             if ($search_selector == 'id') {
-                $query = "SELECT * FROM brands WHERE id = $search_argument;";
+                $query = "SELECT * FROM brands WHERE id = $search_argument ORDER BY name;";
             }
             if ($search_selector == 'all') {
-                $query = "SELECT * FROM brands;";
+                $query = "SELECT * FROM brands ORDER BY name;";
             }
             if ($search_selector == 'store_id') {
                 $query =
                     "SELECT brands.*
                     FROM brands_stores
                     JOIN brands ON brands_stores.brand_id = brands.id
-                    WHERE brands_stores.store_id = $search_argument;";
+                    WHERE brands_stores.store_id = $search_argument
+                    ORDER BY name;";
             }
 
             if ($query) {
