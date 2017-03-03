@@ -80,6 +80,22 @@
 
         function test_BrandStore_delete()
         {
+            // Arrange
+            $brand_store1 = new BrandStore(2, 1);
+            $brand_store2 = new BrandStore(3, 7);
+            $brand_store3 = new BrandStore(13, 17);
+            $brand_store1->save();
+            $brand_store2->save();
+            $brand_store3->save();
+
+            // Act
+            $brand_store2->delete();
+
+            // Assert
+            $this->assertEquals(
+                [$brand_store1, $brand_store3],
+                BrandStore::getAll()
+            );
         }
 
         function test_BrandStore_deleteSome_brand_id()
