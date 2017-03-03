@@ -91,7 +91,7 @@ DROP TABLE IF EXISTS `brands_stores`;
 CREATE TABLE brands_stores (id SERIAL PRIMARY KEY, brand_id BIGINT, store_id BIGINT);
 
 
-* Install dependencies (composer.json, composer.log, .gitignore)
+* Install dependencies (composer.json, composer.lock, .gitignore)
 * Build and test BrandStore join class (src/BrandStore.php, tests/BrandStoreTest.php)
 * Build and test Store class (src/Store.php, tests/StoreTest.php)
 * Build and test Brand class (src/Brand.php, tests/BrandTest.php)
