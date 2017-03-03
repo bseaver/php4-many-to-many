@@ -142,7 +142,7 @@
             $brand_store4->save();
 
             // Act
-            $found_stores = Store::getSome('store_id', 3);
+            $found_stores = Store::getSome('brand_id', 3);
 
             // Assert
             $this->assertEquals(

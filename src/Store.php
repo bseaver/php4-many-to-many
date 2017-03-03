@@ -67,7 +67,7 @@
                 $query =
                     "SELECT stores.*
                     FROM brands_stores
-                    JOIN stores ON brands_stores.brand_id = stores.id
+                    JOIN stores ON brands_stores.store_id = stores.id
                     WHERE brands_stores.brand_id = $search_argument
                     ORDER BY name;";
             }
