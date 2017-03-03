@@ -53,8 +53,11 @@
             $this->id = $GLOBALS['DB']->lastInsertId();
         }
 
-        function update()
+        function update($brand_id, $store_id)
         {
+            $this->setBrandId($brand_id);
+            $this->setStoreId($store_id);
+            
             $GLOBALS['DB']->exec(
                 "UPDATE brands_stores SET
                     brand_id = {$this->getBrandId()},

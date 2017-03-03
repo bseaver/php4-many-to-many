@@ -62,6 +62,20 @@
 
         function test_BrandStore_update()
         {
+            // Arrange
+            $brand_store1 = new BrandStore(2, 1);
+            $brand_store1->save();
+
+            // Act
+            $brand_store1->update(33, 37);
+            $brand_stores = BrandStore::getAll();
+            $brand_store2 = $brand_stores[0];
+
+            // Assert
+            $this->assertEquals(
+                [33, 37],
+                [$brand_store2->getBrandId(), $brand_store2->getStoreId()]
+            );
         }
 
         function test_BrandStore_delete()
