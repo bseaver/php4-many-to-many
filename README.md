@@ -6,7 +6,7 @@
 
 ## Description
 
-Demonstrate PHP Objects, CRUD methods, automated testing, many to many relationships and an MVC style website using Silex with Twig views.
+Demonstrate PHP Objects, automated testing, CRUD methods, RESTful routing, many to many relationships and an MVC style website using Silex with Twig views.
 
 ## Project Requirements:
 Write a program to list out local shoe stores and the brands of shoes they carry. Make a `Store` class and a `Brand` class.
@@ -72,15 +72,15 @@ Write a program to list out local shoe stores and the brands of shoes they carry
 
 ## Implementation Plan
 
-* In interactive SQL create database and tables:
+* In interactive SQL, create database and tables:
     * (SQL commands go here)
 * Install dependencies (composer.json, composer.log, .gitignore)
+* Build and test BrandStore join class (src/BrandStore.php, tests/BrandStoreTest.php)
 * Build and test Store class (src/Store.php, tests/StoreTest.php)
 * Build and test Brand class (src/Brand.php, tests/BrandTest.php)
-* Build and test BrandStore join class (src/BrandStore.php, tests/BrandStoreTest.php)
 * Create Silex framework (web/index.php, app/app.php)
 * Create empty routes for all CRUD methods
-* Design pages to demonstrate many to many relationships between Stores and Brands
+* Design pages to demonstrate many to many relationships between Stores and Brands and also provide Add, Update, Display and Delete features.
 * Implement routes with object operations and views
 
 * End specifications
