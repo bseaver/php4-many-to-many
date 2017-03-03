@@ -93,8 +93,8 @@ CREATE TABLE brands_stores (id SERIAL PRIMARY KEY, brand_id BIGINT, store_id BIG
 
 * Install dependencies (composer.json, composer.lock, .gitignore)
 * Build and test BrandStore join class (src/BrandStore.php, tests/BrandStoreTest.php)
-* Build and test Store class (src/Store.php, tests/StoreTest.php)
 * Build and test Brand class (src/Brand.php, tests/BrandTest.php)
+* Build and test Store class (src/Store.php, tests/StoreTest.php)
 * Create Silex framework (web/index.php, app/app.php)
 * Create empty routes for all CRUD methods
 * Design pages to demonstrate many to many relationships between Stores and Brands and also provide Add, Update, Display and Delete features.
