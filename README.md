@@ -72,8 +72,25 @@ Write a program to list out local shoe stores and the brands of shoes they carry
 
 ## Implementation Plan
 
-* In interactive SQL, create database and tables:
-    * (SQL commands go here)
+* In interactive SQL, create database and tables (you can paste all lines below at once at the `mysql>` prompt):
+
+CREATE DATABASE IF NOT EXISTS `shoes`;
+
+USE `shoes`;
+
+DROP TABLE IF EXISTS `stores`;
+
+CREATE TABLE stores (id SERIAL PRIMARY KEY, name varchar(255));
+
+DROP TABLE IF EXISTS `brands`;
+
+CREATE TABLE brands (id SERIAL PRIMARY KEY, name varchar(255));
+
+DROP TABLE IF EXISTS `brands_stores`;
+
+CREATE TABLE brands_stores (id SERIAL PRIMARY KEY, brand_id BIGINT, store_id BIGINT);
+
+
 * Install dependencies (composer.json, composer.log, .gitignore)
 * Build and test BrandStore join class (src/BrandStore.php, tests/BrandStoreTest.php)
 * Build and test Store class (src/Store.php, tests/StoreTest.php)
