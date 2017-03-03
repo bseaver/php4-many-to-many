@@ -68,16 +68,16 @@
             $output = array();
             $query = "";
 
-            if ($search_selector = 'id') {
+            if ($search_selector == 'id') {
                 $query = "SELECT * FROM brands_stores WHERE id = $search_argument;";
             }
-            if ($search_selector = 'all') {
+            if ($search_selector == 'all') {
                 $query = "SELECT * FROM brands_stores;";
             }
-            if ($search_selector = 'brand_id') {
+            if ($search_selector == 'brand_id') {
                 $delete_command = "SELECT * FROM brands_stores WHERE brand_id = $search_argument;";
             }
-            if ($search_selector = 'store_id') {
+            if ($search_selector == 'store_id') {
                 $delete_command = "SELECT * FROM brands_stores WHERE store_id = $search_argument;";
             }
 
@@ -104,16 +104,16 @@
         {
             $delete_command = '';
 
-            if ($search_selector = 'id') {
+            if ($search_selector == 'id') {
                 $delete_command = "DELETE FROM brands_stores WHERE id = $search_argument;";
             }
-            if ($search_selector = 'all') {
+            if ($search_selector == 'all') {
                 $delete_command = "DELETE FROM brands_stores;";
             }
-            if ($search_selector = 'brand_id') {
+            if ($search_selector == 'brand_id') {
                 $delete_command = "DELETE FROM brands_stores WHERE brand_id = $search_argument;";
             }
-            if ($search_selector = 'store_id') {
+            if ($search_selector == 'store_id') {
                 $delete_command = "DELETE FROM brands_stores WHERE store_id = $search_argument;";
             }
 

@@ -16,7 +16,7 @@
     {
         protected function tearDown()
         {
-            // BrandStore::deleteAll();
+            BrandStore::deleteAll();
         }
 
         function test_BrandStore_get_set_construct()
@@ -38,6 +38,26 @@
 
         function test_BrandStore_save_deleteAll_getAll()
         {
+            // Arrange
+            $brand_store1 = new BrandStore(2, 1);
+            $brand_store2 = new BrandStore(3, 7);
+
+            // Act
+            $brand_store1->save();
+            $brand_store2->save();
+
+            BrandStore::deleteAll();
+
+            $brand_store3 = new BrandStore(11, 22);
+            $brand_store4 = new BrandStore(14, 33);
+            $brand_store3->save();
+            $brand_store4->save();
+
+            // Assert
+            $this->assertEquals(
+                [$brand_store3, $brand_store4],
+                BrandStore::getAll()
+            );
         }
 
         function test_BrandStore_update()
