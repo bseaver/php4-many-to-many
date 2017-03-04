@@ -33,17 +33,18 @@
 
         function save()
         {
+            $name = addslashes($this->getName());
             $GLOBALS['DB']->exec(
             "INSERT INTO stores
                 (name) VALUES
-                ('{$this->getName()}');"
+                ('$name');"
             );
             $this->id = $GLOBALS['DB']->lastInsertId();
         }
 
         function update($name)
         {
-            $this->setName($name);
+            $this->setName(addslashes($name));
 
             $GLOBALS['DB']->exec(
                 "UPDATE stores SET

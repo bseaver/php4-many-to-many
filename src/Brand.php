@@ -33,6 +33,7 @@
 
         function save()
         {
+            $name = addslashes($this->getName());
             $GLOBALS['DB']->exec(
             "INSERT INTO brands
                 (name) VALUES
@@ -43,7 +44,7 @@
 
         function update($name)
         {
-            $this->setName($name);
+            $this->setName(addslashes($name));
 
             $GLOBALS['DB']->exec(
                 "UPDATE brands SET
