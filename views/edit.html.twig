@@ -91,7 +91,7 @@
                             </form>
                         </td>
                         <td>
-                            <form action='/delete/author/{{ author.getId }}' method='post'>
+                            <form action='/delete/{{ this_entity }}/{{ item.getId }}' method='post'>
                                 <input name='_method' value='delete' hidden>
                                 <button type='submit' class='btn btn-xs btn-warning'>
                                     Delete

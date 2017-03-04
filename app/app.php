@@ -29,23 +29,39 @@
 
 
     $app->get('/', function() use ($app) {
-        if (empty($_SESSION['NEXT_VIEW'])) {
-            $next_view = 'edit.html.twig';
-            $next_view_context = array(
-                    'edit_store' => New Store,
-                    'edit_brand' => New Brand,
-                    'list_header' => 'All Stores',
-                    'items' => Store::getAll(),
-                    'related_entities' => 'Brands',
-                    'this_entity' => 'store'
+        return $app->redirect('/get/stores/edit');
+    });
+
+    $app->get('/get/stores/edit', function() use ($app) {
+        $next_view = 'edit.html.twig';
+        $next_view_context = array(
+                'edit_store' => New Store,
+                'edit_brand' => New Brand,
+                'list_header' => 'All Stores',
+                'items' => Store::getAll(),
+                'related_entities' => 'Brands',
+                'this_entity' => 'store'
+        );
+
+        if (!empty($_SESSION[NEXT_VIEW_CONTEXT])) {
+            $next_view_context = array_merge(
+                $next_view_context,
+                $_SESSION[NEXT_VIEW_CONTEXT]
             );
+            unset($_SESSION[NEXT_VIEW_CONTEXT]);
         }
 
         return $app['twig']->render($next_view, $next_view_context);
     });
 
     $app->post('/post/store', function() use ($app) {
-        return 'To Do';
+        $store = new Store($_POST['name']);
+        $store->save();
+        $_SESSION['NEXT_VIEW_CONTEXT'] = array(
+            'list_header' => 'New Store',
+            'items' => [$store]
+        );
+        return $app->redirect('/get/stores/edit');
     });
 
     $app->post('/post/brand', function() use ($app) {
@@ -60,8 +76,10 @@
         return 'To Do';
     });
 
-    $app->delete('/delete/store', function() use ($app) {
-        return 'To Do';
+    $app->delete('/delete/store/{id}', function($id) use ($app) {
+        BrandStore::deleteSome('store_id', $id);
+        Store::deleteSome('id', $id);
+        return $app->redirect('/get/stores/edit');
     });
 
     $app->delete('/delete/brand', function() use ($app) {
@@ -76,24 +94,35 @@
         return 'To Do';
     });
 
-    $app->get('/get/store/{id}', function($id) use ($app) {
-        return 'To Do';
-    });
+    // $app->get('/get/store/{id}', function($id) use ($app) {
+    //     return 'To Do';
+    // });
 
     $app->get('/get/brand/{id}', function($id) use ($app) {
         return 'To Do';
     });
 
-    $app->get('/get/stores', function() use ($app) {
-        return 'To Do';
-    });
+    // $app->get('/get/stores', function() use ($app) {
+    //     $next_view = 'edit.html.twig';
+    //     $next_view_context = array(
+    //             'edit_store' => New Store,
+    //             'edit_brand' => New Brand,
+    //             'list_header' => 'All Stores',
+    //             'items' => Store::getAll(),
+    //             'related_entities' => 'Brands',
+    //             'this_entity' => 'store'
+    //     );
+    //
+    //     return $app['twig']->render($next_view, $next_view_context);
+    // });
 
     $app->get('/get/brands', function() use ($app) {
         return 'To Do';
     });
 
     $app->get('/get/store/{id}/edit', function($id) use ($app) {
-        return 'To Do';
+        $_SESSION['NEXT_VIEW_CONTEXT'] = array('edit_store' => Store::find($id));
+        return $app->redirect('/get/stores/edit');
     });
 
     $app->get('/get/brand/{id}/edit', function($id) use ($app) {
