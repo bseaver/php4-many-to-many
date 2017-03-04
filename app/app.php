@@ -4,13 +4,7 @@
     require_once __DIR__.'/../src/Brand.php';
     require_once __DIR__.'/../src/Store.php';
     require_once __DIR__.'/../src/BrandStore.php';
-
-    session_start();
-    define('NEXT_VIEW', 'next_view');
-    define('NEXT_VIEW_CONTEXT', 'next_view_context');
-    // if (empty($_SESSION[LIST_OF_CONTACTS])) {
-    //     $_SESSION[LIST_OF_CONTACTS] = array();
-    // }
+    require_once __DIR__.'/AppRender.php';
 
     $app = new Silex\Application();
     $app['debug'] = true;
@@ -27,41 +21,19 @@
     use Symfony\Component\HttpFoundation\Request;
     Request::enableHttpMethodParameterOverride();
 
-
     $app->get('/', function() use ($app) {
-        return $app->redirect('/get/stores/edit');
-    });
-
-    $app->get('/get/stores/edit', function() use ($app) {
-        $next_view = 'edit.html.twig';
-        $next_view_context = array(
-                'edit_store' => New Store,
-                'edit_brand' => New Brand,
-                'list_header' => 'All Stores',
-                'items' => Store::getAll(),
-                'related_entities' => 'Brands',
-                'this_entity' => 'store'
-        );
-
-        if (!empty($_SESSION[NEXT_VIEW_CONTEXT])) {
-            $next_view_context = array_merge(
-                $next_view_context,
-                $_SESSION[NEXT_VIEW_CONTEXT]
-            );
-            unset($_SESSION[NEXT_VIEW_CONTEXT]);
-        }
-
-        return $app['twig']->render($next_view, $next_view_context);
+        return AppRender::editStores($app);
     });
 
     $app->post('/post/store', function() use ($app) {
-        $store = new Store($_POST['name']);
-        $store->save();
-        $_SESSION['NEXT_VIEW_CONTEXT'] = array(
-            'list_header' => 'New Store',
-            'items' => [$store]
-        );
-        return $app->redirect('/get/stores/edit');
+        return AppRender::postStore($app, $_POST['name']);
+    });
+
+    $app->delete('/delete/store/{id}', function($id) use ($app) {
+        // BrandStore::deleteSome('store_id', $id);
+        // Store::deleteSome('id', $id);
+        // return $app->redirect('/get/stores/edit');
+        return AppRender::deleteStore($app, $id);
     });
 
     $app->post('/post/brand', function() use ($app) {
@@ -74,12 +46,6 @@
 
     $app->patch('/patch/brand', function() use ($app) {
         return 'To Do';
-    });
-
-    $app->delete('/delete/store/{id}', function($id) use ($app) {
-        BrandStore::deleteSome('store_id', $id);
-        Store::deleteSome('id', $id);
-        return $app->redirect('/get/stores/edit');
     });
 
     $app->delete('/delete/brand', function() use ($app) {
@@ -122,6 +88,7 @@
 
     $app->get('/get/store/{id}/edit', function($id) use ($app) {
         $_SESSION['NEXT_VIEW_CONTEXT'] = array('edit_store' => Store::find($id));
+        return 'stopped';
         return $app->redirect('/get/stores/edit');
     });
 

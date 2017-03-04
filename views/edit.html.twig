@@ -12,24 +12,29 @@
                     <label for='name'>Name</label>
                     <input name='name' class='form-control' type='text'
                         value='{{ edit_store.getName }}'
+                        autofocus="autofocus"
                     >
                 </div>
 
-                <button type='submit' class='btn btn-primary'>Save</button>
+                <button type='submit' class='btn btn-primary'>Save Update</button>
             </form>
         {% else %}
             <h3>New Store</h3>
             <form action='/post/store' method='post'>
                 <div class='form-group'>
                     <label for='name'>Name</label>
-                    <input name='name' class='form-control' type='text'>
+                    <input name='name' class='form-control' type='text'
+                    {% if this_entity == 'store' %}
+                        autofocus="autofocus"
+                    {% endif %}
+                    >
                 </div>
 
-                <button type='submit' class='btn btn-primary'>Save</button>
+                <button type='submit' class='btn btn-primary'>Save New</button>
             </form>
         {% endif %}
 
-        <form action='/get/stores' method='get'>
+        <form action='/get/stores/edit' method='get'>
             <button type='submit' class='btn btn-primary'>All Stores</button>
         </form>
 
@@ -44,6 +49,7 @@
                     <label for='name'>Name</label>
                     <input name='name' class='form-control' type='text'
                         value='{{ edit_brand.getName }}'
+                        autofocus="autofocus"
                     >
                 </div>
 
@@ -54,7 +60,11 @@
             <form action='/post/brand' method='post'>
                 <div class='form-group'>
                     <label for='name'>Name</label>
-                    <input name='name' class='form-control' type='text'>
+                    <input name='name' class='form-control' type='text'
+                        {% if this_entity == 'brand' %}
+                            autofocus="autofocus"
+                        {% endif %}
+                    >
                 </div>
 
                 <button type='submit' class='btn btn-primary'>Save</button>
@@ -71,7 +81,7 @@
         <table class='table table-striped'>
             <thead>
                 <th>{{ list_header }}</th>
-                <th>View/Edit Associations with {{ related_entities }}</th>
+                <th>{{ related_entity_name }} Associations</th>
                 <th>Edit</th>
                 <th>Delete</th>
             </thead>
