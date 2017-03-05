@@ -77,6 +77,12 @@
                 [$brand2->getName()]
             );
 
+            // Assert
+            $this->assertEquals(
+                [$brand1->getName()],
+                [$brand2->getName()]
+            );
+
             // Act
             $brand1->update("BoBo's");
             $brands = Brand::getAll();

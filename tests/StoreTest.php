@@ -77,6 +77,12 @@
                 [$store2->getName()]
             );
 
+            // Assert
+            $this->assertEquals(
+                [$store1->getName()],
+                [$store2->getName()]
+            );
+
             // Act
             $store1->update("BoBo's");
             $stores = Store::getAll();
