@@ -37,12 +37,12 @@
         return AppRender::editStores($app);
     });
 
-    $app->get('/get/store/{id}/edit', function() use ($app) {
-        return 'To Do';
+    $app->get('/get/store/{id}/edit', function($id) use ($app) {
+        return AppRender::editStore($app, $id);
     });
 
     $app->patch('/patch/store', function() use ($app) {
-        return 'To Do';
+        return AppRender::updateStore($app, $_POST['name'], $_POST['id']);
     });
 
     $app->delete('/delete/store/{id}', function($id) use ($app) {

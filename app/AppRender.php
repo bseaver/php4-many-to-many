@@ -46,6 +46,52 @@ Class AppRender
         return self::editStores($app, $next_view_data_overrides);
     }
 
+    static function editStore(&$app, $id)
+    {
+        $store = Store::find($id);
+        $next_view_data_overrides = array(
+            'edit_store' => $store
+        );
+        return self::editStores($app, $next_view_data_overrides);
+    }
+
+    static function updateStore(&$app, $name, $id)
+    {
+        $next_view_data_overrides = array();
+        $name = trim($name);
+        $done = !$name;
+        $dups = 0;
+
+        if (!$done) {
+            $store = Store::find($id);
+            $stores_of_same_name = Store::getSome('name', $name);
+            $dups = count($stores_of_same_name);
+        }
+
+        if (!$done && !$dups) {
+            $store->update($name);
+            $next_view_data_overrides = array(
+                'crud_header' => 'Updated Store',
+                'crud_items' => [$store]
+            );
+            $done = true;
+        }
+
+        if (!$done && $dups == 1) {
+            $done = $store->getId() == $stores_of_same_name[0]->getId();
+        }
+
+        if (!$done && $dups) {
+            $next_view_data_overrides = array(
+                'crud_header' => 'Store Already On File',
+                'crud_items' => $stores_of_same_name,
+                'edit_store' => $store
+            );
+            $done = true;
+        }
+        return self::editStores($app, $next_view_data_overrides);
+    }
+
     static function deleteStore(&$app, $id)
     {
         $store = Store::find($id);
@@ -55,15 +101,6 @@ Class AppRender
         $next_view_data_overrides = array(
             'crud_header' => 'Deleted!',
             'crud_items' => [$store]
-        );
-        return self::editStores($app, $next_view_data_overrides);
-    }
-
-    static function editStore(&$app, $id)
-    {
-        $store = Store::find($id);
-        $next_view_data_overrides = array(
-            'edit_store' => $store
         );
         return self::editStores($app, $next_view_data_overrides);
     }
