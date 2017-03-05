@@ -48,7 +48,7 @@
 
             Brand::deleteAll();
 
-            $brand3 = new Brand('BoBos');
+            $brand3 = new Brand("BoBo's");
             $brand4 = new Brand('Nike');
             $brand3->save();
             $brand4->save();
@@ -74,6 +74,17 @@
             // Assert
             $this->assertEquals(
                 ['Vasque'],
+                [$brand2->getName()]
+            );
+
+            // Act
+            $brand1->update("BoBo's");
+            $brands = Brand::getAll();
+            $brand2 = $brands[0];
+
+            // Assert
+            $this->assertEquals(
+                ["BoBo's"],
                 [$brand2->getName()]
             );
         }
@@ -147,6 +158,28 @@
             // Assert
             $this->assertEquals(
                 [$brand2, $brand3],
+                $found_brands
+            );
+        }
+
+        function test_Brand_getSome_name()
+        {
+            // Arrange
+            $brand1 = new Brand('Skeechers');
+            $brand2 = new Brand("BoBo's");
+            $brand3 = new Brand('Vasque');
+            $brand4 = new Brand("BoBo's");
+            $brand1->save();
+            $brand2->save();
+            $brand3->save();
+            $brand4->save();
+
+            // Act
+            $found_brands = Brand::getSome('name', "BoBo's");
+
+            // Assert
+            $this->assertEquals(
+                [$brand2, $brand4],
                 $found_brands
             );
         }
