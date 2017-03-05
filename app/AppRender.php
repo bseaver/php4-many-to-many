@@ -104,5 +104,12 @@ Class AppRender
         );
         return self::editStores($app, $next_view_data_overrides);
     }
+
+    static function deleteStores(&$app)
+    {
+        Store::deleteAll();
+        BrandStore::deleteAll();
+        return self::editStores($app);
+    }
 }
 ?>

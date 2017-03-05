@@ -50,7 +50,7 @@
     });
 
     $app->delete('/delete/stores', function() use ($app) {
-        return 'To Do';
+        return AppRender::deleteStores($app);
     });
 
     // Store / Brand Associations
