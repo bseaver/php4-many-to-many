@@ -48,7 +48,7 @@
 
             Store::deleteAll();
 
-            $store3 = new Store('BoBos');
+            $store3 = new Store("BoBo's");
             $store4 = new Store('Nike');
             $store3->save();
             $store4->save();
@@ -74,6 +74,17 @@
             // Assert
             $this->assertEquals(
                 ['Vasque'],
+                [$store2->getName()]
+            );
+
+            // Act
+            $store1->update("BoBo's");
+            $stores = Store::getAll();
+            $store2 = $stores[0];
+
+            // Assert
+            $this->assertEquals(
+                ["BoBo's"],
                 [$store2->getName()]
             );
         }
@@ -147,6 +158,28 @@
             // Assert
             $this->assertEquals(
                 [$store2, $store3],
+                $found_stores
+            );
+        }
+
+        function test_Store_getSome_name()
+        {
+            // Arrange
+            $store1 = new Store('Skeechers');
+            $store2 = new Store("BoBo's");
+            $store3 = new Store('Vasque');
+            $store4 = new Store("BoBo's");
+            $store1->save();
+            $store2->save();
+            $store3->save();
+            $store4->save();
+
+            // Act
+            $found_stores = Store::getSome('name', "BoBo's");
+
+            // Assert
+            $this->assertEquals(
+                [$store2, $store4],
                 $found_stores
             );
         }

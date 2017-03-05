@@ -33,48 +33,64 @@
 
         function save()
         {
-            $name = addslashes($this->getName());
-            $GLOBALS['DB']->exec(
-            "INSERT INTO stores
-                (name) VALUES
-                ('$name');"
+            $statement_handle = $GLOBALS['DB']->prepare(
+                "INSERT INTO stores (name) VALUES (:name);"
             );
+            $statement_handle->bindValue(':name', $this->getName(), PDO::PARAM_STR);
+            $statement_handle->execute();
             $this->id = $GLOBALS['DB']->lastInsertId();
         }
 
         function update($name)
         {
-            $this->setName(addslashes($name));
-
-            $GLOBALS['DB']->exec(
+            $statement_handle = $GLOBALS['DB']->prepare(
                 "UPDATE stores SET
-                    name = '{$this->getName()}'
-                WHERE id = {$this->getId()};"
+                    name = :name
+                WHERE id = :id ;"
             );
+            $statement_handle->bindValue(':name', $name, PDO::PARAM_STR);
+            $statement_handle->bindValue(':id', $this->getId(), PDO::PARAM_INT);
+            $statement_handle->execute();
         }
 
         static function getSome($search_selector, $search_argument = '')
         {
             $output = array();
-            $query = "";
+            $statement_handle = null;
 
             if ($search_selector == 'id') {
-                $query = "SELECT * FROM stores WHERE id = $search_argument ORDER BY name;";
+                $statement_handle = $GLOBALS['DB']->prepare(
+                    "SELECT * FROM stores WHERE id = :search_argument ORDER BY name, id;"
+                );
+                $statement_handle->bindValue(':search_argument', $search_argument, PDO::PARAM_STR);
             }
+
+            if ($search_selector == 'name') {
+                $statement_handle = $GLOBALS['DB']->prepare(
+                    "SELECT * FROM stores WHERE `name` = :search_argument ORDER BY name, id;"
+                );
+                $statement_handle->bindValue(':search_argument', $search_argument, PDO::PARAM_STR);
+            }
+
             if ($search_selector == 'all') {
-                $query = "SELECT * FROM stores ORDER BY name;";
+                $statement_handle = $GLOBALS['DB']->prepare("SELECT * FROM stores ORDER BY name, id;");
             }
+
             if ($search_selector == 'brand_id') {
-                $query =
+                $statement_handle = $GLOBALS['DB']->prepare(
                     "SELECT stores.*
                     FROM brands_stores
                     JOIN stores ON brands_stores.store_id = stores.id
-                    WHERE brands_stores.brand_id = $search_argument
-                    ORDER BY name;";
+                    WHERE brands_stores.brand_id = :search_argument
+                    ORDER BY name, id;"
+                );
+                $statement_handle->bindValue(':search_argument', $search_argument, PDO::PARAM_INT);
             }
 
-            if ($query) {
-                $results = $GLOBALS['DB']->query($query);
+            if ($statement_handle) {
+                $statement_handle->execute();
+                $results = $statement_handle->fetchAll();
+                // $results = $GLOBALS['DB']->query($query);
                 foreach ($results as $result) {
                         $new_store = new Store(
                         $result['name'],
@@ -86,25 +102,28 @@
             return $output;
         }
 
+        static function deleteSome($search_selector, $search_argument = 0)
+        {
+            $statement_handle = null;
+
+            if ($search_selector == 'id') {
+                $statement_handle = $GLOBALS['DB']->prepare(
+                    "DELETE FROM stores WHERE id = :search_argument;"
+                );
+                $statement_handle->bindValue(':search_argument', $search_argument, PDO::PARAM_INT);
+            }
+            if ($search_selector == 'all') {
+                $statement_handle = $GLOBALS['DB']->prepare("DELETE FROM stores;");
+            }
+
+            if ($statement_handle) {
+                $statement_handle->execute();
+            }
+        }
+
         static function getAll()
         {
             return self::getSome('all');
-        }
-
-        static function deleteSome($search_selector, $search_argument = 0)
-        {
-            $delete_command = '';
-
-            if ($search_selector == 'id') {
-                $delete_command = "DELETE FROM stores WHERE id = $search_argument;";
-            }
-            if ($search_selector == 'all') {
-                $delete_command = "DELETE FROM stores;";
-            }
-
-            if ($delete_command) {
-                $GLOBALS['DB']->exec($delete_command);
-            }
         }
 
         static function deleteAll()
