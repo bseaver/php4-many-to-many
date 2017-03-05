@@ -43,12 +43,13 @@
 
         function update($name)
         {
+            $this->setName($name);
             $statement_handle = $GLOBALS['DB']->prepare(
                 "UPDATE brands SET
                     name = :name
                 WHERE id = :id ;"
             );
-            $statement_handle->bindValue(':name', $name, PDO::PARAM_STR);
+            $statement_handle->bindValue(':name', $this->getName(), PDO::PARAM_STR);
             $statement_handle->bindValue(':id', $this->getId(), PDO::PARAM_INT);
             $statement_handle->execute();
         }
