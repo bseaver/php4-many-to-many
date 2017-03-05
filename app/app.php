@@ -21,22 +21,23 @@
     use Symfony\Component\HttpFoundation\Request;
     Request::enableHttpMethodParameterOverride();
 
+    // Home route (send to Store entry edit)
+
     $app->get('/', function() use ($app) {
         return AppRender::editStores($app);
     });
+
+    // Store CRUD routes
 
     $app->post('/post/store', function() use ($app) {
         return AppRender::postStore($app, $_POST['name']);
     });
 
-    $app->delete('/delete/store/{id}', function($id) use ($app) {
-        // BrandStore::deleteSome('store_id', $id);
-        // Store::deleteSome('id', $id);
-        // return $app->redirect('/get/stores/edit');
-        return AppRender::deleteStore($app, $id);
+    $app->get('/get/stores', function() use ($app) {
+        return AppRender::editStores($app);
     });
 
-    $app->post('/post/brand', function() use ($app) {
+    $app->get('/get/store/{id}/edit', function() use ($app) {
         return 'To Do';
     });
 
@@ -44,71 +45,23 @@
         return 'To Do';
     });
 
-    $app->patch('/patch/brand', function() use ($app) {
-        return 'To Do';
-    });
-
-    $app->delete('/delete/brand', function() use ($app) {
-        return 'To Do';
+    $app->delete('/delete/store/{id}', function($id) use ($app) {
+        return AppRender::deleteStore($app, $id);
     });
 
     $app->delete('/delete/stores', function() use ($app) {
         return 'To Do';
     });
 
-    $app->delete('/delete/brands', function() use ($app) {
+    // Store / Brand Associations
+
+    $app->get('/get/store/{id}/brands', function() use ($app) {
         return 'To Do';
     });
 
-    // $app->get('/get/store/{id}', function($id) use ($app) {
-    //     return 'To Do';
-    // });
-
-    $app->get('/get/brand/{id}', function($id) use ($app) {
-        return 'To Do';
-    });
-
-    // $app->get('/get/stores', function() use ($app) {
-    //     $next_view = 'edit.html.twig';
-    //     $next_view_context = array(
-    //             'edit_store' => New Store,
-    //             'edit_brand' => New Brand,
-    //             'list_header' => 'All Stores',
-    //             'items' => Store::getAll(),
-    //             'related_entities' => 'Brands',
-    //             'this_entity' => 'store'
-    //     );
-    //
-    //     return $app['twig']->render($next_view, $next_view_context);
-    // });
+    // Brand CRUD routes
 
     $app->get('/get/brands', function() use ($app) {
-        return 'To Do';
-    });
-
-    $app->get('/get/store/{id}/edit', function($id) use ($app) {
-        $_SESSION['NEXT_VIEW_CONTEXT'] = array('edit_store' => Store::find($id));
-        return 'stopped';
-        return $app->redirect('/get/stores/edit');
-    });
-
-    $app->get('/get/brand/{id}/edit', function($id) use ($app) {
-        return 'To Do';
-    });
-
-    $app->post('/post/store/{store_id}/brand/{brand_id}', function($store_id, $brand_id) use ($app) {
-        return 'To Do';
-    });
-
-    $app->post('/post/brand/{brand_id}/store/{store_id}', function($store_id, $brand_id) use ($app) {
-        return 'To Do';
-    });
-
-    $app->delete('/delete/store/{store_id}/brand/{brand_id}', function($store_id, $brand_id) use ($app) {
-        return 'To Do';
-    });
-
-    $app->delete('/delete/brand/{brand_id}/store/{store_id}', function($brand_id, $store_id) use ($app) {
         return 'To Do';
     });
 
