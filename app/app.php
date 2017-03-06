@@ -24,33 +24,33 @@
     // Home route (send to Store entry edit)
 
     $app->get('/', function() use ($app) {
-        return AppRender::editStores($app);
+        return AppRender::editBrandsStores($app);
     });
 
     // Store CRUD routes
 
     $app->post('/post/store', function() use ($app) {
-        return AppRender::postStore($app, $_POST['name']);
+        return AppRender::postBrandStore('store', $app, $_POST['name']);
     });
 
     $app->get('/get/stores', function() use ($app) {
-        return AppRender::editStores($app);
+        return AppRender::editBrandsStores('store', $app);
     });
 
     $app->get('/get/store/{id}/edit', function($id) use ($app) {
-        return AppRender::editStore($app, $id);
+        return AppRender::editBrandStore('store', $app, $id);
     });
 
     $app->patch('/patch/store', function() use ($app) {
-        return AppRender::updateStore($app, $_POST['name'], $_POST['id']);
+        return AppRender::updateBrandStore('store', $app, $_POST['name'], $_POST['id']);
     });
 
     $app->delete('/delete/store/{id}', function($id) use ($app) {
-        return AppRender::deleteStore($app, $id);
+        return AppRender::deleteBrandStore('store', $app, $id);
     });
 
     $app->delete('/delete/stores', function() use ($app) {
-        return AppRender::deleteStores($app);
+        return AppRender::deleteBrandsStores('store', $app);
     });
 
     // Store / Brand Associations
