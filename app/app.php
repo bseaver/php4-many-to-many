@@ -61,7 +61,33 @@
 
     // Brand CRUD routes
 
+    $app->post('/post/brand', function() use ($app) {
+        return AppRender::postBrandStore('brand', $app, $_POST['name']);
+    });
+
     $app->get('/get/brands', function() use ($app) {
+        return AppRender::editBrandsStores('brand', $app);
+    });
+
+    $app->get('/get/brand/{id}/edit', function($id) use ($app) {
+        return AppRender::editBrandStore('brand', $app, $id);
+    });
+
+    $app->patch('/patch/brand', function() use ($app) {
+        return AppRender::updateBrandStore('brand', $app, $_POST['name'], $_POST['id']);
+    });
+
+    $app->delete('/delete/brand/{id}', function($id) use ($app) {
+        return AppRender::deleteBrandStore('brand', $app, $id);
+    });
+
+    $app->delete('/delete/brands', function() use ($app) {
+        return AppRender::deleteBrandsStores('brand', $app);
+    });
+
+    // Brand / Store Associations
+
+    $app->get('/get/brand/{id}/stores', function() use ($app) {
         return 'To Do';
     });
 
