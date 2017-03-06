@@ -10,13 +10,13 @@
         <h4>Click adjacent <em>View / Edit Associations</em></h4>
         <br>
         <br>
-        <h4>Switch to <a href='/get/brands'>Brand Entry Edit</a></h4>
+        <h4>Switch to <a href='/get/{{ related_entities }}'>{{ related_entity_name }} Entry Edit</a></h4>
         <br>
         <br>
-        <form action='/delete/stores' method='post'>
+        <form action='/delete/{{ this_entities }}' method='post'>
             <input name='_method' value='delete' hidden>
             <button type='submit' class='btn btn-xs btn-danger'>
-                Delete All Stores -- WARNING!
+                Delete All {{ this_entity_names }} -- WARNING!
             </button>
         </form>
     </div> <!-- End Col -->

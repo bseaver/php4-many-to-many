@@ -57,6 +57,9 @@ Class AppRender
         $related_entities = self::entities($context, true);
 
         $this_entity = self::entity($context);
+        $this_entities = self::entities($context);
+        $this_entity_name = self::singularUpperCaseName($context);
+        $this_entity_names = self::pluralUpperCaseName($context);
 
         $next_view = 'brand_store_edit.html.twig';
         $next_view_data = array(
@@ -67,7 +70,10 @@ Class AppRender
                 'items' => $items,
                 'related_entity_name' => $related_entity_name,
                 'related_entities' => $related_entities,
-                'this_entity' => $this_entity
+                'this_entity' => $this_entity,
+                'this_entities' => $this_entities,
+                'this_entity_name' => $this_entity_name,
+                'this_entity_names' => $this_entity_names
         );
 
         if ($next_view_data_overrides) {

@@ -1,6 +1,6 @@
 {% if edit_item.getId %}
-    <h4>Edit Store</h4>
-    <form action='/patch/store' method='post'>
+    <h4>Edit {{ this_entity_name }}</h4>
+    <form action='/patch/{{ this_entity }}' method='post'>
         <div class='form-group'>
             <input name='_method' value='patch' hidden>
             <input name='id' value='{{ edit_item.getId }}' hidden>
@@ -15,14 +15,12 @@
         <button type='submit' class='btn btn-primary'>Update</button>
     </form>
 {% else %}
-    <h4>New Store</h4>
-    <form action='/post/store' method='post'>
+    <h4>New {{ this_entity_name }}</h4>
+    <form action='/post/{{ this_entity }}' method='post'>
         <div class='form-group'>
             <label for='name'>Name</label>
             <input name='name' class='form-control' type='text'
-                {% if this_entity == 'store' %}
-                    autofocus="autofocus"
-                {% endif %}
+                autofocus="autofocus"
                 autocomplete="off"
             >
         </div>
