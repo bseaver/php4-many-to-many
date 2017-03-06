@@ -1,34 +1,39 @@
 <?php
 Class AppRender
 {
-    static function primaryObject($context)
+    static function relatedContext($context)
     {
+        return $context == 'brand' ? 'store' : 'brand';
+    }
+
+    static function primaryObject($context, $related = false)
+    {
+        if ($related) {$context = self::relatedContext($context);}
         return $context == 'brand' ? 'Brand' : 'Store';
     }
 
-    static function pluralUpperCaseName($context)
+    static function pluralUpperCaseName($context, $related = false)
     {
+        if ($related) {$context = self::relatedContext($context);}
         return $context == 'brand' ? 'Brands' : 'Stores';
     }
 
-    static function relatedEntitylUpperCaseName($context)
+    static function singularUpperCaseName($context, $related = false)
     {
-        return $context == 'brand' ? 'Store' : 'Brand';
-    }
-
-    static function relatedEntities($context)
-    {
-        return $context == 'brand' ? 'stores' : 'brands';
-    }
-
-    static function thisEntity($context)
-    {
-        return $context == 'brand' ? 'brand' : 'store';
-    }
-
-    static function singlularUpperCaseName($context)
-    {
+        if ($related) {$context = self::relatedContext($context);}
         return $context == 'brand' ? 'Brand' : 'Store';
+    }
+
+    static function entities($context, $related = false)
+    {
+        if ($related) {$context = self::relatedContext($context);}
+        return $context == 'brand' ? 'brands' : 'stores';
+    }
+
+    static function entity($context, $related = false)
+    {
+        if ($related) {$context = self::relatedContext($context);}
+        return $context == 'brand' ? 'brand' : 'store';
     }
 
     static function brandStoreDeleteSomeId($context)
@@ -47,12 +52,11 @@ Class AppRender
         $object_getAll_method = array($primary_object, 'getAll');
         $items = $object_getAll_method();
 
-        $related_entity_name = self::relatedEntitylUpperCaseName($context);
+        $related_entity_name = self::singularUpperCaseName($context, true);
 
-        $related_entities = self::relatedEntities($context);
+        $related_entities = self::entities($context, true);
 
-        $this_entity = self::thisEntity($context);
-
+        $this_entity = self::entity($context);
 
         $next_view = 'store_edit.html.twig';
         $next_view_data = array(
@@ -78,7 +82,7 @@ Class AppRender
         $primary_object = self::primaryObject($context);
         $object_getSome_method = array($primary_object, 'getSome');
         $objects_of_same_name = $object_getSome_method('name', $name);
-        $entity_name = self::singlularUpperCaseName($context);
+        $entity_name = self::singularUpperCaseName($context);
 
         $dups = count($objects_of_same_name);
         $done = false;
@@ -113,7 +117,7 @@ Class AppRender
     static function postBrandStore($context, &$app, $name)
     {
         $primary_object = self::primaryObject($context);
-        $entity_name = self::singlularUpperCaseName($context);
+        $entity_name = self::singularUpperCaseName($context);
         $next_view_data_overrides = array();
         $name = trim($name);
         $done = !$name;
@@ -152,7 +156,7 @@ Class AppRender
     static function updateBrandStore($context, &$app, $name, $id)
     {
         $primary_object = self::primaryObject($context);
-        $entity_name = self::singlularUpperCaseName($context);
+        $entity_name = self::singularUpperCaseName($context);
         $next_view_data_overrides = array();
         $name = trim($name);
         $done = !$name;
@@ -180,7 +184,7 @@ Class AppRender
     {
         $primary_object = self::primaryObject($context);
         $join_table_id = self::brandStoreDeleteSomeId($context);
-        $entity_name = self::singlularUpperCaseName($context);
+        $entity_name = self::singularUpperCaseName($context);
 
         $this_object = $primary_object::find($id);
         $this_object->delete();
