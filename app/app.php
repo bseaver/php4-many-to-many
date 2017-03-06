@@ -24,7 +24,7 @@
     // Home route (send to Store entry edit)
 
     $app->get('/', function() use ($app) {
-        return AppRender::editBrandsStores($app);
+        return AppRender::editBrandsStores('store', $app);
     });
 
     // Store CRUD routes
