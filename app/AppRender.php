@@ -58,9 +58,9 @@ Class AppRender
 
         $this_entity = self::entity($context);
 
-        $next_view = 'store_edit.html.twig';
+        $next_view = 'brand_store_edit.html.twig';
         $next_view_data = array(
-                'edit_store' => $empty_primary_object,
+                'edit_item' => $empty_primary_object,
                 'crud_header' => '',
                 'crud_items' => array($empty_primary_object),
                 'list_header' => $list_header,
@@ -106,7 +106,7 @@ Class AppRender
             $next_view_data_overrides = array(
                 'crud_header' => $crud_header,
                 'crud_items' => $objects_of_same_name,
-                'edit_store' => $this_object
+                'edit_item' => $this_object
             );
             $done = true;
         }
@@ -148,7 +148,7 @@ Class AppRender
         $object_find_method = array($primary_object, 'find');
         $object = $object_find_method($id);
         $next_view_data_overrides = array(
-            'edit_store' => $object
+            'edit_item' => $object
         );
         return self::editBrandsStores($context, $app, $next_view_data_overrides);
     }

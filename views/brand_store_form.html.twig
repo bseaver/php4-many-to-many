@@ -1,12 +1,12 @@
-{% if edit_store.getId %}
+{% if edit_item.getId %}
     <h4>Edit Store</h4>
     <form action='/patch/store' method='post'>
         <div class='form-group'>
             <input name='_method' value='patch' hidden>
-            <input name='id' value='{{ edit_store.getId }}' hidden>
+            <input name='id' value='{{ edit_item.getId }}' hidden>
             <label for='name'>Name</label>
             <input name='name' class='form-control' type='text'
-                value='{{ edit_store.getName }}'
+                value='{{ edit_item.getName }}'
                 autofocus="autofocus"
                 autocomplete="off"
             >
