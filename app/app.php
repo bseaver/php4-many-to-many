@@ -53,11 +53,6 @@
         return AppRender::deleteBrandsStores('store', $app);
     });
 
-    // Store / Brand Associations
-
-    $app->get('/get/store/{id}/brands', function() use ($app) {
-        return 'To Do';
-    });
 
     // Brand CRUD routes
 
@@ -85,11 +80,38 @@
         return AppRender::deleteBrandsStores('brand', $app);
     });
 
+    // Store / Brand Associations
+
+    $app->get('/get/store/{id}/brands', function($id) use ($app) {
+        return 'To Do';
+    });
+
+    $app->post('/post/store/{store_id}/brand/{brand_id}', function($store_id, $brand_id) use ($app) {
+        return 'To Do';
+    });
+
+    $app->delete('/delete/store/{store_id}/brand/{brand_id}', function($store_id, $brand_id) use ($app) {
+        return 'To Do';
+    });
+
+    $app->delete('/delete/store/{store_id}/brands', function($store_id) use ($app) {
+        return 'To Do';
+    });
+
+    $app->delete('/delete/stores/brands', function() use ($app) {
+        return 'To Do';
+    });
+
     // Brand / Store Associations
 
     $app->get('/get/brand/{id}/stores', function() use ($app) {
         return 'To Do';
     });
+
+
+
+
+
 
 
     return $app;

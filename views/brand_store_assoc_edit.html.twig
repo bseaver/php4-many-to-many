@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block page %}
+<div class='row'>
+    <div class='col-md-6'>
+        {% include 'brand_store_form.html.twig' %}
+        <br>
+        <br>
+        <h4>To Manage Store / Brand Associations</h4>
+        <h4>Click adjacent <em>View / Edit Associations</em></h4>
+        <br>
+        <br>
+        <h4>Switch to <a href='/get/{{ related_entities }}'>{{ related_entity_name }} Entry Edit</a></h4>
+        <br>
+        <br>
+        <form action='/delete/{{ this_entities }}' method='post'>
+            <input name='_method' value='delete' hidden>
+            <button type='submit' class='btn btn-xs btn-danger'>
+                Delete All {{ this_entity_names }} -- WARNING!
+            </button>
+        </form>
+    </div> <!-- End Col -->
+
+    <div class='col-md-6'>
+        {% if crud_header is not empty %}
+            {% include 'edit_list.html.twig' with {'list_header': crud_header, items: crud_items} %}
+        {% endif %}
+
+        {% include 'edit_list.html.twig' %}
+    </div> <!-- End Col -->
+</div> <!-- End Row -->
+{% endblock %}

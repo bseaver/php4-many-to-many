@@ -1,0 +1,17 @@
+<form action='/post/{{ this_entity }}' method='post'>
+    <label for='this_name'>{{ this_entity_name }} to Associate with {{ related_entity_names }}</label>
+    <input name='this_name' class='form-control' type='text'
+        value='{{ this_item.getName }}'
+        disabled="disabled"
+    >
+
+    <div class='form-group'>
+        <label for='related_name'>Add and Associate {{ related_entity_name }}</label>
+        <input name='related_name' class='form-control' type='text'
+            autofocus="autofocus"
+            autocomplete="off"
+        >
+    </div>
+
+    <button type='submit' class='btn btn-primary'>Save and Associate</button>
+</form>
