@@ -1,0 +1,47 @@
+<table class='table table-striped'>
+    <thead>
+        <th>
+            {% if assoc %}
+                Associated
+            {% else %}
+                Unassociated
+            {% endif %}
+            {{ related_entity_names }}
+        </th>
+        <th>
+            {% if assoc %}
+                Unassociate
+            {% else %}
+                Associate
+            {% endif %}
+            {{ related_entity_name }}
+        </th>
+        <th>{{ related_entity_name }} Associations</th>
+    </thead>
+
+    <tbody>
+        {% for item in items %}
+            <tr>
+                <td>{{ item.getName }}</td>
+                <td>
+                    <form action='/get/{{ this_entity }}/{{ item.getId }}/edit' method='get'>
+                        <button type='submit' class='btn btn-xs btn-default'>
+                            {% if assoc %}
+                                Unassociate
+                            {% else %}
+                                Associate
+                            {% endif %}
+                        </button>
+                    </form>
+                </td>
+                <td>
+                    <form action='/get/{{ related_entity }}/{{ item.getId }}/{{ this_entities }}' method='get'>
+                        <button type='submit' class='btn btn-xs btn-info'>
+                            View / Edit Associations
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
