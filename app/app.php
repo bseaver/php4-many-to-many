@@ -21,7 +21,7 @@
     use Symfony\Component\HttpFoundation\Request;
     Request::enableHttpMethodParameterOverride();
 
-    // Home route (send to Store entry edit)
+    // Home route
 
     $app->get('/', function() use ($app) {
         return AppRender::brandsStoresHome($app);
@@ -52,7 +52,6 @@
     $app->delete('/delete/stores', function() use ($app) {
         return AppRender::deleteBrandsStores('store', $app);
     });
-
 
     // Brand CRUD routes
 
