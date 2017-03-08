@@ -137,7 +137,7 @@
             );
         }
 
-        function test_Store_getSome_store_id()
+        function test_Store_getSome_brand_id()
         {
             // Arrange
             $store1 = new Store('Skeechers');
@@ -164,6 +164,37 @@
             // Assert
             $this->assertEquals(
                 [$store2, $store3],
+                $found_stores
+            );
+        }
+
+        function test_Store_getSome_null_brand_id()
+        {
+            // Arrange
+            $store1 = new Store('Skeechers');
+            $store2 = new Store('BoBos');
+            $store3 = new Store('Vasque');
+            $store4 = new Store('Tony Look');
+            $store1->save();
+            $store2->save();
+            $store3->save();
+            $store4->save();
+
+            $brand_store1 = new BrandStore(7, $store4->getId());
+            $brand_store2 = new BrandStore(3, $store3->getId());
+            $brand_store3 = new BrandStore(3, $store2->getId());
+            $brand_store4 = new BrandStore(9, $store1->getId());
+            $brand_store1->save();
+            $brand_store2->save();
+            $brand_store3->save();
+            $brand_store4->save();
+
+            // Act
+            $found_stores = Store::getSome('null_brand_id', 3);
+
+            // Assert
+            $this->assertEquals(
+                [$store1, $store4],
                 $found_stores
             );
         }
