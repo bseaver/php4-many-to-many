@@ -88,6 +88,22 @@
                 $statement_handle->bindValue(':search_argument', $search_argument, PDO::PARAM_INT);
             }
 
+            if ($search_selector == 'null_brand_id') {
+                $statement_handle = $GLOBALS['DB']->prepare(
+                    "SELECT stores.*
+                    FROM stores
+                    WHERE NOT EXISTS
+                        (SELECT *
+                        FROM brands_stores
+                        WHERE
+                            brands_stores.brand_id = :search_argument AND
+                            brands_stores.store_id = stores.id
+                        )
+                    ORDER BY stores.name, stores.id;"
+                );
+                $statement_handle->bindValue(':search_argument', $search_argument, PDO::PARAM_INT);
+            }
+
             if ($statement_handle) {
                 $statement_handle->execute();
                 $results = $statement_handle->fetchAll();
