@@ -103,7 +103,7 @@
     });
 
     $app->delete('/delete/stores/brands', function() use ($app) {
-        return 'To Do';
+        return AppRender::deleteBrandStoreLinksAll($app);
     });
 
     // Brand / Store Associations
