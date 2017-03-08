@@ -68,7 +68,7 @@ Class AppRender
         $unassoc_related_items = Brand::getSome('null_store_id', $id);
 
 
-        $next_view = 'brand_store_assoc_edit.html.twig';
+        $next_view = 'assoc_edit.html.twig';
         $next_view_data = array(
             'this_item' => $this_item,
             'assoc_related_items' => $assoc_related_items,
@@ -138,7 +138,7 @@ Class AppRender
         $this_entity_name = self::singularUpperCaseName($context);
         $this_entity_names = self::pluralUpperCaseName($context);
 
-        $next_view = 'brand_store_edit.html.twig';
+        $next_view = 'maint_edit.html.twig';
         $next_view_data = array(
                 'edit_item' => $empty_primary_object,
                 'crud_header' => '',

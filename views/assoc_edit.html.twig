@@ -3,7 +3,7 @@
 {% block page %}
 <div class='row'>
     <div class='col-md-6'>
-        {% include 'brand_store_assoc_form.html.twig' %}
+        {% include 'assoc_form.html.twig' %}
         <br>
         <br>
         <h4>To Manage Store / Brand Associations</h4>
@@ -27,9 +27,9 @@
     </div> <!-- End Col -->
 
     <div class='col-md-6'>
-        {% include 'brand_store_assoc_list.html.twig' with {'assoc': 1, items: assoc_related_items} %}
+        {% include 'assoc_list.html.twig' with {'assoc': 1, items: assoc_related_items} %}
 
-        {% include 'brand_store_assoc_list.html.twig' with {'assoc': 0, items: unassoc_related_items} %}
+        {% include 'assoc_list.html.twig' with {'assoc': 0, items: unassoc_related_items} %}
     </div> <!-- End Col -->
 </div> <!-- End Row -->
 {% endblock %}
