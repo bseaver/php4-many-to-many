@@ -64,8 +64,8 @@ Class AppRender
     {
         $this_item = Store::getSome('id', $id)[0];
 
-        $assoc_related_items = Store::getSome('brand_id', $id);
-        $unassoc_related_items = Store::getSome('null_brand_id', $id);
+        $assoc_related_items = Brand::getSome('store_id', $id);
+        $unassoc_related_items = Brand::getSome('null_store_id', $id);
 
 
         $next_view = 'brand_store_assoc_edit.html.twig';
@@ -84,6 +84,23 @@ Class AppRender
         );
 
         return $app['twig']->render($next_view, $next_view_data);
+    }
+
+    static function postBrandStoreLink($context, &$app, $entity_id, $related_entity_id)
+    {
+        $brand_id = $related_entity_id;
+        $store_id = $entity_id;
+        $brand_store = new BrandStore($brand_id, $store_id);
+        $brand_store->save();
+
+        return self::editBrandsStoresLinks($context, $app, $entity_id);
+    }
+
+    static function deleteBrandStoreLink($context, &$app, $brand_id, $store_id)
+    {
+        BrandStore::deleteSome('brand_and_store_ids', $brand_id, $store_id);
+
+        return self::editBrandsStoresLinks($context, $app, $store_id);
     }
 
     static function editBrandsStores($context, &$app, &$next_view_data_overrides = null)

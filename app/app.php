@@ -91,11 +91,11 @@
     });
 
     $app->post('/post/store/{store_id}/brand/{brand_id}', function($store_id, $brand_id) use ($app) {
-        return 'To Do';
+        return AppRender::postBrandStoreLink('store', $app, $store_id, $brand_id);
     });
 
     $app->delete('/delete/store/{store_id}/brand/{brand_id}', function($store_id, $brand_id) use ($app) {
-        return 'To Do';
+        return AppRender::deleteBrandStoreLink('store', $app, $brand_id, $store_id);
     });
 
     $app->delete('/delete/store/{store_id}/brands', function($store_id) use ($app) {
