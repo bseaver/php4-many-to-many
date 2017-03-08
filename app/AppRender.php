@@ -62,25 +62,29 @@ Class AppRender
 
     static function editBrandsStoresLinks($context, &$app, $id)
     {
-        $this_item = Store::getSome('id', $id)[0];
+        $primary_object = self::primaryObject($context);
+        $object_getsome_method = array($primary_object, 'getSome');
+        $related_object = self::primaryObject($context, true);
+        $related_getsome_method = array($related_object, 'getSome');
 
-        $assoc_related_items = Brand::getSome('store_id', $id);
-        $unassoc_related_items = Brand::getSome('null_store_id', $id);
+        $this_item = $object_getsome_method('id', $id)[0];
 
+        $assoc_related_items = $related_getsome_method('store_id', $id);
+        $unassoc_related_items = $related_getsome_method('null_store_id', $id);
 
         $next_view = 'assoc_edit.html.twig';
         $next_view_data = array(
             'this_item' => $this_item,
             'assoc_related_items' => $assoc_related_items,
             'unassoc_related_items' => $unassoc_related_items,
-            'this_entity' => 'store',
-            'this_entities' => 'stores',
-            'this_entity_name' => 'Store',
-            'this_entity_names' => 'Stores',
-            'related_entity' => 'brand',
-            'related_entities' => 'brands',
-            'related_entity_name' => 'Brand',
-            'related_entity_names' => 'Brands',
+            'this_entity' => self::entity($context),
+            'this_entities' => self::entities($context),
+            'this_entity_name' => self::singularUpperCaseName($context),
+            'this_entity_names' => self::pluralUpperCaseName($context),
+            'related_entity' => self::entity($context, true),
+            'related_entities' => self::entities($context, true),
+            'related_entity_name' => self::singularUpperCaseName($context, true),
+            'related_entity_names' => self::pluralUpperCaseName($context, true)
         );
 
         return $app['twig']->render($next_view, $next_view_data);
