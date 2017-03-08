@@ -63,9 +63,16 @@ Class AppRender
     static function editBrandsStoresLinks($context, &$app, $id)
     {
         $this_item = Store::getSome('id', $id)[0];
+
+        $assoc_related_items = Store::getSome('brand_id', $id);
+        $unassoc_related_items = Store::getSome('null_brand_id', $id);
+
+
         $next_view = 'brand_store_assoc_edit.html.twig';
         $next_view_data = array(
             'this_item' => $this_item,
+            'assoc_related_items' => $assoc_related_items,
+            'unassoc_related_items' => $unassoc_related_items,
             'this_entity' => 'store',
             'this_entities' => 'stores',
             'this_entity_name' => 'Store',

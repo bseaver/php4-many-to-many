@@ -24,15 +24,20 @@
             <tr>
                 <td>{{ item.getName }}</td>
                 <td>
-                    <form action='/get/{{ this_entity }}/{{ item.getId }}/edit' method='get'>
-                        <button type='submit' class='btn btn-xs btn-default'>
-                            {% if assoc %}
+                    {% if assoc %}
+                        <form action='/delete/{{ this_entity }}/{{ this_item.getId }}/{{ related_entity}}/{{ item.getId }}' method='post'>
+                            <input name='_method' value='delete' hidden>
+                            <button type='submit' class='btn btn-xs btn-warning'>
                                 Unassociate
-                            {% else %}
+                            </button>
+                        </form>
+                    {% else %}
+                        <form action='/post/{{ this_entity }}/{{ this_item.getId }}/{{ related_entity}}/{{ item.getId }}' method='post'>
+                            <button type='submit' class='btn btn-xs btn-primary'>
                                 Associate
-                            {% endif %}
-                        </button>
-                    </form>
+                            </button>
+                        </form>
+                    {% endif %}
                 </td>
                 <td>
                     <form action='/get/{{ related_entity }}/{{ item.getId }}/{{ this_entities }}' method='get'>
