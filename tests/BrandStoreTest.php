@@ -155,8 +155,8 @@
             $brand_store4->save();
 
             // Act
-            BrandStore::deleteSome('brand_store_ids', 3, 17);
-            BrandStore::deleteSome('brand_store_ids', 13, 17);
+            BrandStore::deleteSome('brand_and_store_ids', 3, 17);
+            BrandStore::deleteSome('brand_and_store_ids', 13, 17);
 
             // Assert
             $this->assertEquals(

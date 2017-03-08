@@ -103,7 +103,7 @@
             return self::getSome('all');
         }
 
-        static function deleteSome($search_selector, $search_argument = 0)
+        static function deleteSome($search_selector, $search_argument = 0, $search_argument2 = 0)
         {
             $delete_command = '';
 
@@ -118,6 +118,10 @@
             }
             if ($search_selector == 'store_id') {
                 $delete_command = "DELETE FROM brands_stores WHERE store_id = $search_argument;";
+            }
+
+            if ($search_selector == 'brand_and_store_ids') {
+                $delete_command = "DELETE FROM brands_stores WHERE brand_id = $search_argument AND store_id = $search_argument2;";
             }
 
             if ($delete_command) {
