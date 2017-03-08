@@ -86,8 +86,8 @@
         return AppRender::editBrandsStoresLinks('store', $app, $id);
     });
 
-    $app->post('/post/store/brand', function($store_id, $brand_id) use ($app) {
-        return 'To Do';
+    $app->post('/post/store/brand', function() use ($app) {
+        return AppRender::postBrandStoreName('store', $app);
     });
 
     $app->post('/post/store/{store_id}/brand/{brand_id}', function($store_id, $brand_id) use ($app) {

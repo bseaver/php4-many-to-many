@@ -36,7 +36,7 @@ Class AppRender
         return $context == 'brand' ? 'brand' : 'store';
     }
 
-    static function brandStoreDeleteSomeId($context)
+    static function brandStoreId($context)
     {
         return $context == 'brand' ? 'brand_id' : 'store_id';
     }
@@ -96,6 +96,44 @@ Class AppRender
         return self::editBrandsStoresLinks($context, $app, $entity_id);
     }
 
+    static function postBrandStoreName($context, &$app)
+    {
+        $this_id = $_POST['this_id'];
+        $related_name = trim($_POST['related_name']);
+        $done = !$related_name;
+        $matched = 0;
+
+        if (!$done) {
+            $related_object = self::primaryObject($context, true);
+            $object_getSome_method = array($related_object, 'getSome');
+            $objects_of_same_name = $object_getSome_method('name', $related_name);
+            $matched = count($objects_of_same_name);
+        }
+
+        if (!$done && $matched) {
+            $related_item = $objects_of_same_name[0];
+        }
+
+        if (!$done && !$matched) {
+            $related_item = new Brand($related_name);
+            $related_item->save();
+        }
+
+        if (!$done){
+            if ($context == 'store'){
+                $brand_id = $related_item->getId();
+                $store_id = $this_id;
+            } else {
+                $brand_id = $this_id;
+                $store_id = $related_item->getId();
+            }
+
+            $brand_store = new BrandStore($brand_id, $store_id);
+            $brand_store->save();
+        }
+        return self::editBrandsStoresLinks($context, $app, $this_id);
+    }
+
     static function deleteBrandStoreLink($context, &$app, $brand_id, $store_id)
     {
         BrandStore::deleteSome('brand_and_store_ids', $brand_id, $store_id);
@@ -105,7 +143,7 @@ Class AppRender
 
     static function deleteBrandStoreLinks($context, &$app, $entity_id)
     {
-        $ids_to_delete = self::brandStoreDeleteSomeId('context');
+        $ids_to_delete = self::brandStoreId('context');
 
         BrandStore::deleteSome($ids_to_delete, $entity_id);
 
@@ -266,7 +304,7 @@ Class AppRender
     static function deleteBrandStore($context, &$app, $id)
     {
         $primary_object = self::primaryObject($context);
-        $join_table_id = self::brandStoreDeleteSomeId($context);
+        $join_table_id = self::brandStoreId($context);
         $entity_name = self::singularUpperCaseName($context);
 
         $this_object = $primary_object::find($id);

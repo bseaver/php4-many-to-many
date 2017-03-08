@@ -1,5 +1,6 @@
 <form action='/post/{{ this_entity }}/{{ related_entity }}' method='post'>
     <label for='this_name'>{{ this_entity_name }} to Associate with {{ related_entity_names }}</label>
+    <input name='this_id' type='text' value='{{ this_item.getId }}' hidden>
     <input name='this_name' class='form-control' type='text'
         value='{{ this_item.getName }}'
         disabled="disabled"
