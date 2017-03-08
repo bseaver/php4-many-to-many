@@ -89,26 +89,29 @@
             }
 
             // The next two queries both pass the same tests
-            
-            if ($search_selector == 'null_store_id') {
-                $statement_handle = $GLOBALS['DB']->prepare(
-                    "SELECT brands.*
-                    FROM brands
-                    LEFT JOIN brands_stores ON
-                        brand.id = brands_stores.brand_id AND :search_argument = brands_stores.store_id
-                    WHERE brands_stores.store_id IS NULL
-                    ORDER BY brands.name, brands.id;"
-                );
-                $statement_handle->bindValue(':search_argument', $search_argument, PDO::PARAM_INT);
-            }
-
             if ($search_selector == 'null_store_id') {
                 $statement_handle = $GLOBALS['DB']->prepare(
                     "SELECT brands.*
                     FROM brands
                     WHERE NOT EXISTS
-                        (SELECT * FROM brands_stores
-                        WHERE brands_stores.store_id = :search_argument AND brands_stores.brand_id = brands.id)
+                        (SELECT *
+                        FROM brands_stores
+                        WHERE
+                            brands_stores.store_id = :search_argument AND
+                            brands_stores.brand_id = brands.id
+                        )
+                    ORDER BY brands.name, brands.id;"
+                );
+                $statement_handle->bindValue(':search_argument', $search_argument, PDO::PARAM_INT);
+            }
+
+            if ($search_selector == 'null_store_id_alt') {
+                $statement_handle = $GLOBALS['DB']->prepare(
+                    "SELECT brands.*
+                    FROM brands
+                    LEFT JOIN brands_stores ON
+                        brands.id = brands_stores.brand_id AND :search_argument = brands_stores.store_id
+                    WHERE brands_stores.store_id IS NULL
                     ORDER BY brands.name, brands.id;"
                 );
                 $statement_handle->bindValue(':search_argument', $search_argument, PDO::PARAM_INT);

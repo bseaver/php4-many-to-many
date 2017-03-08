@@ -200,6 +200,37 @@
             );
         }
 
+        function test_Brand_getSome_null_store_id_alt()
+        {
+            // Arrange
+            $brand1 = new Brand('Skeechers');
+            $brand2 = new Brand('BoBos');
+            $brand3 = new Brand('Vasque');
+            $brand4 = new Brand('Tony Look');
+            $brand1->save();
+            $brand2->save();
+            $brand3->save();
+            $brand4->save();
+
+            $brand_store1 = new BrandStore($brand4->getId(), 7);
+            $brand_store2 = new BrandStore($brand3->getId(), 3);
+            $brand_store3 = new BrandStore($brand2->getId(), 3);
+            $brand_store4 = new BrandStore($brand1->getId(), 9);
+            $brand_store1->save();
+            $brand_store2->save();
+            $brand_store3->save();
+            $brand_store4->save();
+
+            // Act
+            $found_brands = Brand::getSome('null_store_id_alt', 3);
+
+            // Assert
+            $this->assertEquals(
+                [$brand1, $brand4],
+                $found_brands
+            );
+        }
+
         function test_Brand_getSome_name()
         {
             // Arrange
