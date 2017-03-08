@@ -3,7 +3,7 @@
 {% block page %}
 <div class='row'>
     <div class='col-md-6'>
-        {% include 'brand_store_assoc_form.html.twig' %}
+        {# {% include 'brand_store_assoc_form.html.twig' %} #}
         <br>
         <br>
         <h4>To Manage Store / Brand Associations</h4>
@@ -31,9 +31,11 @@
     </div> <!-- End Col -->
 
     <div class='col-md-6'>
+        {#
         {% include 'assoc_list.html.twig' with {'list_header': crud_header, items: crud_items} %}
 
         {% include 'assoc_list.html.twig' %}
+        #}
     </div> <!-- End Col -->
 </div> <!-- End Row -->
 {% endblock %}

@@ -24,7 +24,7 @@
     // Home route (send to Store entry edit)
 
     $app->get('/', function() use ($app) {
-        return AppRender::editBrandsStores('store', $app);
+        return AppRender::brandsStoresHome($app);
     });
 
     // Store CRUD routes
@@ -83,7 +83,7 @@
     // Store / Brand Associations
 
     $app->get('/get/store/{id}/brands', function($id) use ($app) {
-        return 'To Do';
+        return AppRender::editBrandsStoresLinks('store', $app, $id);
     });
 
     $app->post('/post/store/brand', function($store_id, $brand_id) use ($app) {

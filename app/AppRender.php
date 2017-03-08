@@ -41,6 +41,43 @@ Class AppRender
         return $context == 'brand' ? 'brand_id' : 'store_id';
     }
 
+    static function brandsStoresHome(&$app)
+    {
+        // Search for a store - if found edit that one's links
+        // Otherwise send the user to the edit stores page
+        $context = 'store';
+        $id = null;
+
+        $stores = Store::getSome('all');
+        if (count($stores)) {
+            $id = $stores[0]->getId();
+        }
+
+        if ($id) {
+            return self::editBrandsStoresLinks('store', $app, $id);
+        } else {
+            return self::editBrandsStores('store', $app);
+        }
+    }
+
+    static function editBrandsStoresLinks($context, &$app, $id)
+    {
+        $this_item = Store::getSome('id', $id)[0];
+        $next_view = 'brand_store_assoc_edit.html.twig';
+        $next_view_data = array(
+            'this_item' => $this_item,
+            'this_entity' => 'store',
+            'this_entities' => 'stores',
+            'this_entity_name' => 'Store',
+            'this_entity_names' => 'Stores',
+            'related_entity' => 'brand',
+            'related_entities' => 'brands',
+            'related_entity_name' => 'Brand',
+            'related_entity_names' => 'Brands',
+        );
+
+        return $app['twig']->render($next_view, $next_view_data);
+    }
 
     static function editBrandsStores($context, &$app, &$next_view_data_overrides = null)
     {
