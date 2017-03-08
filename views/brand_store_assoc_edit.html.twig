@@ -10,10 +10,6 @@
         <h4>Click adjacent <em>View / Edit Associations</em> buttons</h4>
         <br>
         <br>
-        <h4> <a href='/get/stores'>Store Entry Edit</a></h4>
-        <h4> <a href='/get/brands'>Brand Entry Entry Edit</a></h4>
-        <br>
-        <br>
         <form action='/delete/{{ this_entity }}/{{ this_item.getId }}/{{ related_entities }}' method='post'>
             <input name='_method' value='delete' hidden>
             <button type='submit' class='btn btn-xs btn-danger'>
