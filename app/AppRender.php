@@ -103,6 +103,15 @@ Class AppRender
         return self::editBrandsStoresLinks($context, $app, $store_id);
     }
 
+    static function deleteBrandStoreLinks($context, &$app, $entity_id)
+    {
+        $ids_to_delete = self::brandStoreDeleteSomeId('context');
+
+        BrandStore::deleteSome($ids_to_delete, $entity_id);
+
+        return self::editBrandsStoresLinks($context, $app, $entity_id);
+    }
+
     static function editBrandsStores($context, &$app, &$next_view_data_overrides = null)
     {
         $primary_object = self::primaryObject($context);

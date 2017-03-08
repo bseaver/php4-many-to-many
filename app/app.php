@@ -99,7 +99,7 @@
     });
 
     $app->delete('/delete/store/{store_id}/brands', function($store_id) use ($app) {
-        return 'To Do';
+        return AppRender::deleteBrandStoreLinks('store', $app, $store_id);
     });
 
     $app->delete('/delete/stores/brands', function() use ($app) {
