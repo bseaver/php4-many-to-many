@@ -88,6 +88,18 @@
                 $statement_handle->bindValue(':search_argument', $search_argument, PDO::PARAM_INT);
             }
 
+            // if ($search_selector == 'null_store_id') {
+            //     $statement_handle = $GLOBALS['DB']->prepare(
+            //         "SELECT brands.*
+            //         FROM brands
+            //         WHERE NOT EXISTS
+            //             (SELECT * FROM brands_stores
+            //             WHERE store_id = :search_argument AND brand_id = brand.brand_id)
+            //         ORDER BY name, id;"
+            //     );
+            //     $statement_handle->bindValue(':search_argument', $search_argument, PDO::PARAM_INT);
+            // }
+
             if ($statement_handle) {
                 $statement_handle->execute();
                 $results = $statement_handle->fetchAll();
