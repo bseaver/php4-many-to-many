@@ -142,6 +142,29 @@
             );
         }
 
+        function test_BrandStore_deleteSome_brand_and_store_ids()
+        {
+            // Arrange
+            $brand_store1 = new BrandStore(2, 1);
+            $brand_store2 = new BrandStore(3, 17);
+            $brand_store3 = new BrandStore(2, 7);
+            $brand_store4 = new BrandStore(13, 17);
+            $brand_store1->save();
+            $brand_store2->save();
+            $brand_store3->save();
+            $brand_store4->save();
+
+            // Act
+            BrandStore::deleteSome('brand_store_ids', 3, 17);
+            BrandStore::deleteSome('brand_store_ids', 13, 17);
+
+            // Assert
+            $this->assertEquals(
+                [$brand_store1, $brand_store3],
+                BrandStore::getAll()
+            );
+        }
+
         function test_BrandStore_find()
         {
             // Arrange
