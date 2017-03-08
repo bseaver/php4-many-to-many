@@ -92,8 +92,14 @@ Class AppRender
 
     static function postBrandStoreLink($context, &$app, $entity_id, $related_entity_id)
     {
-        $brand_id = $related_entity_id;
-        $store_id = $entity_id;
+        if ($context == 'store') {
+            $brand_id = $related_entity_id;
+            $store_id = $entity_id;
+        } else {
+            $brand_id = $entity_id;
+            $store_id = $related_entity_id;
+        }
+
         $brand_store = new BrandStore($brand_id, $store_id);
         $brand_store->save();
 
