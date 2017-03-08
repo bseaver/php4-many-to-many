@@ -1,6 +1,3 @@
-# Attention: This project is not yet complete.
-# It is missing the screens that enable linking of the Stores to Brands
-
 # Many to Many
 
 #### Epicodus PHP Week 4 Code Review, 3/3/2017
