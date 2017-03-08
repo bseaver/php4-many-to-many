@@ -91,7 +91,7 @@
     });
 
     $app->post('/post/store/{store_id}/brand/{brand_id}', function($store_id, $brand_id) use ($app) {
-        return AppRender::postBrandStoreLink('store', $app, $store_id, $brand_id);
+        return AppRender::postBrandStoreLink('store', $app, $brand_id, $store_id);
     });
 
     $app->delete('/delete/store/{store_id}/brand/{brand_id}', function($store_id, $brand_id) use ($app) {
@@ -106,16 +106,31 @@
         return AppRender::deleteBrandStoreLinksAll($app);
     });
 
-    // Brand / Store Associations
+    // Store / Brand Associations
 
-    $app->get('/get/brand/{id}/stores', function() use ($app) {
-        return 'To Do';
+    $app->get('/get/brand/{id}/stores', function($id) use ($app) {
+        return AppRender::editBrandsStoresLinks('brand', $app, $id);
     });
 
+    $app->post('/post/brand/store', function() use ($app) {
+        return AppRender::postBrandStoreName('brand', $app);
+    });
 
+    $app->post('/post/brand/{brand_id}/store/{store_id}', function($brand_id, $store_id) use ($app) {
+        return AppRender::postBrandStoreLink('brand', $app, $brand_id, $store_id);
+    });
 
+    $app->delete('/delete/brand/{brand_id}/store/{store_id}', function($brand_id, $store_id) use ($app) {
+        return AppRender::deleteBrandStoreLink('brand', $app, $brand_id, $store_id);
+    });
 
+    $app->delete('/delete/brand/{brand_id}/stores', function($brand_id) use ($app) {
+        return AppRender::deleteBrandStoreLinks('brand', $app, $brand_id);
+    });
 
+    $app->delete('/delete/brands/stores', function() use ($app) {
+        return AppRender::deleteBrandStoreLinksAll($app);
+    });
 
 
     return $app;

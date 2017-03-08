@@ -41,6 +41,11 @@ Class AppRender
         return $context == 'brand' ? 'brand_id' : 'store_id';
     }
 
+    static function brandStoreNullId($context)
+    {
+        return $context == 'brand' ? 'null_brand_id' : 'null_store_id';
+    }
+
     static function brandsStoresHome(&$app)
     {
         // Search for a store - if found edit that one's links
@@ -69,8 +74,8 @@ Class AppRender
 
         $this_item = $object_getsome_method('id', $id)[0];
 
-        $assoc_related_items = $related_getsome_method('store_id', $id);
-        $unassoc_related_items = $related_getsome_method('null_store_id', $id);
+        $assoc_related_items = $related_getsome_method(self::brandStoreId($context), $id);
+        $unassoc_related_items = $related_getsome_method(self::brandStoreNullId($context), $id);
 
         $next_view = 'assoc_edit.html.twig';
         $next_view_data = array(
@@ -90,18 +95,16 @@ Class AppRender
         return $app['twig']->render($next_view, $next_view_data);
     }
 
-    static function postBrandStoreLink($context, &$app, $entity_id, $related_entity_id)
+    static function postBrandStoreLink($context, &$app, $brand_id, $store_id)
     {
-        if ($context == 'store') {
-            $brand_id = $related_entity_id;
-            $store_id = $entity_id;
-        } else {
-            $brand_id = $entity_id;
-            $store_id = $related_entity_id;
-        }
-
         $brand_store = new BrandStore($brand_id, $store_id);
         $brand_store->save();
+
+        if ($context == 'store') {
+            $entity_id = $store_id;
+        } else {
+            $entity_id = $brand_id;
+        }
 
         return self::editBrandsStoresLinks($context, $app, $entity_id);
     }
@@ -148,7 +151,12 @@ Class AppRender
     {
         BrandStore::deleteSome('brand_and_store_ids', $brand_id, $store_id);
 
-        return self::editBrandsStoresLinks($context, $app, $store_id);
+        if ($context == 'store') {
+            $entity_id = $store_id;
+        } else {
+            $entity_id = $brand_id;
+        }
+        return self::editBrandsStoresLinks($context, $app, $entity_id);
     }
 
     static function deleteBrandStoreLinks($context, &$app, $entity_id)
