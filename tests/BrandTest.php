@@ -251,6 +251,15 @@
                 [$brand2, $brand4],
                 $found_brands
             );
+
+            // Act
+            $found_brands = Brand::getSome('name', 'Vasque');
+
+            // Assert
+            $this->assertEquals(
+                [$brand3],
+                $found_brands
+            );
         }
     }
 ?>
