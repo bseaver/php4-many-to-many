@@ -33,15 +33,16 @@ Write a program to list out local shoe stores and the brands of shoes they carry
 ## Installation Instructions
 * Clone project.
 * From project root, run $ `composer install --prefer-source --no-interaction`
+* Assumes Mamp MySQL user and password of `root`
 * Start MAMP servers.
 * Use MAMP website `http://localhost:8888/phpmyadmin/` to import database with sample data from the `shoes.sql.zip` file.
 * To enable the PHPUnit Tests, use MAMP website to import the `shoes_test.sql.zip` database.
 * To run PHPUnit tests from project root, run $ `vendor/bin/phpunit tests`
 * To run website using installed _PHP_ (better error messages):
-    * From web folder in project, run $ `php -S localhost:8000`.
+    * From `web` folder in project, run $ `php -S localhost:8000`.
     * In web browser open `localhost:8000`.
 * To run website using _MAMP_:
-    * Change the document root to the project web folder.
+    * Change the document root to the project `web` folder.
     * In web browser open `localhost:8888`.
 * To start interactive SQL at command prompt run $ `/Applications/MAMP/Library/bin/mysql --host=localhost -uroot -proot`
 
@@ -100,4 +101,4 @@ CREATE TABLE brands_stores (id SERIAL PRIMARY KEY, brand_id BIGINT, store_id BIG
 * Design pages to demonstrate many to many relationships between Stores and Brands and also provide Add, Update, Display and Delete features.
 * Implement routes with object operations and views
 
-* End specifications
+End specifications
